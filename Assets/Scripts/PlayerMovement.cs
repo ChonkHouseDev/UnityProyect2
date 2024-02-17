@@ -10,7 +10,11 @@ public class PlayerMovement : MonoBehaviour
    private float moveSpeed;
    public float walkSpeed;
    public float sprintSpeed;
-
+   
+   [Header("Vivo")] 
+   [SerializeField] protected int vidaMax;
+   private int _vida;
+   
    public float groundDrag;
 
    [Header("Jumping") ]
@@ -90,6 +94,11 @@ public class PlayerMovement : MonoBehaviour
    private void FixedUpdate()
    {
       MovePlayer();
+   }
+
+   private void Awake()
+   {
+      Vida = vidaMax;
    }
 
    private void MyInput()
@@ -236,5 +245,45 @@ public class PlayerMovement : MonoBehaviour
    private Vector3 GetSLopeMoveDirection()
    {
       return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+   }
+
+   public void OnTriggerEnter(Collider other)
+   {
+      if (other.CompareTag("Enemigo"))
+      {
+      print("Colisiono con "+other.gameObject.name);   
+      }
+   }
+
+   public int Vida
+   {
+      get
+      {
+         return _vida;
+      }
+
+      set
+      {
+         if (value <= 0)
+         {
+            //Morir
+            return;
+         }
+         else if (value >= vidaMax)
+         {
+            _vida = vidaMax;
+         }
+         else
+         {
+            if (value < _vida)
+            {
+               //StartCoroutine(CrColorDano());
+            }
+
+            _vida = value;
+         }
+
+         //barraVida.fillAmount = (float)_vida / vidaMax;
+      }
    }
 }
