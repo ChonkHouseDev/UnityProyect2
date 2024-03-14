@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -42,6 +44,13 @@ public class PlayerMovement : MonoBehaviour
    public float maxSlopeAngle;
    private RaycastHit slopeHit;
    private bool exitingSlope;
+
+   [Header("UI")] 
+   [SerializeField] private Image imagenBarraVida;
+
+   [SerializeField] private TMP_Text cantUIFuego;
+   [SerializeField] private TMP_Text cantUIAgua;
+   [SerializeField] private TMP_Text cantUITierra;
    
    public Transform orientation;
 
@@ -61,6 +70,46 @@ public class PlayerMovement : MonoBehaviour
       air
    }
 
+   #region Items
+   public int _cantidadFuego;
+
+   private int CantidadFuego
+   {
+      get => _cantidadFuego;
+      set
+      {
+         _cantidadFuego = value;
+         cantUIFuego.text =value.ToString();
+      }
+   }
+   
+   public int _cantidadAgua;
+
+   private int CantidadAgua
+   {
+      get => _cantidadAgua;
+      set
+      {
+         _cantidadAgua = value;
+         cantUIAgua.text =value.ToString();
+      }
+   }
+   
+   public int _cantidadTierra;
+
+   private int CantidadTierra
+   {
+      get => _cantidadTierra;
+      set
+      {
+         _cantidadTierra = value;
+         cantUITierra.text =value.ToString();
+      }
+   }
+   #endregion Items
+   
+   
+   
    private void Start()
    {
       rb = GetComponent<Rigidbody>();
@@ -89,6 +138,8 @@ public class PlayerMovement : MonoBehaviour
       {
          rb.drag = 0;
       }
+      
+      print(Convert.ToString(Vida) );
    }
 
    private void FixedUpdate()
@@ -99,6 +150,9 @@ public class PlayerMovement : MonoBehaviour
    private void Awake()
    {
       Vida = vidaMax;
+      CantidadFuego = 0;
+      CantidadAgua = 0;
+      CantidadTierra = 0;
    }
 
    private void MyInput()
@@ -208,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
          }
-         print("Speed: "+flatVel.magnitude);
+         //print("Speed: "+flatVel.magnitude);
       }
       
    }
@@ -228,8 +282,11 @@ public class PlayerMovement : MonoBehaviour
 
       exitingSlope = false;
    }
-   
-   
+
+   private void DanoEnemigo()
+   {
+      Vida = Vida - 5;
+   }
 
    private bool OnSlope()
    {
@@ -251,8 +308,32 @@ public class PlayerMovement : MonoBehaviour
    {
       if (other.CompareTag("Enemigo"))
       {
-      print("Colisiono con "+other.gameObject.name);   
+         DanoEnemigo();
       }
+
+      switch (other.tag)
+      {
+         case "PickupFire":
+            CantidadFuego++;
+            Destroy(other.gameObject);
+            print("pickup fuego");
+            break;
+         
+         case "PickupAgua":
+            CantidadAgua++;
+            Destroy(other.gameObject);
+            print("pickup agua");
+            break;
+         
+         case "PickupTierra":
+            CantidadTierra++;
+            Destroy(other.gameObject);
+            print("pickup tierra");
+            break;
+         
+            
+      }
+       
    }
 
    public int Vida
@@ -283,7 +364,8 @@ public class PlayerMovement : MonoBehaviour
             _vida = value;
          }
 
-         //barraVida.fillAmount = (float)_vida / vidaMax;
+         imagenBarraVida.fillAmount = (float)_vida / vidaMax;
+
       }
    }
 }
