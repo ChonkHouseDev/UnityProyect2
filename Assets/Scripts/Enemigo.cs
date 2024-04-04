@@ -16,10 +16,21 @@ public class Enemigo : MonoBehaviour
     public float velocidad;
     private Animator animator;
     [SerializeField] private AnimationClip animAtaque;
+    [SerializeField] private AnimationClip animMorir;
+    private bool muriendo;
     [SerializeField] private Transform enemigoWing;
     private BoxCollider colliderWing;
+    [SerializeField] private Transform enemigoCabeza;
+    private BoxCollider colliderCabeza;
+
+    [SerializeField] private Bullet disparo;
+    
+    [SerializeField] protected int vidaMax;
+    private int _vida;
     private void Awake()
     {
+        disparo.Enemy = this;
+        Vida = vidaMax;
         ObtenerComponentes();
     }
 
@@ -32,13 +43,16 @@ public class Enemigo : MonoBehaviour
 
         colliderWing = enemigoWing.GetComponent<BoxCollider>();
         colliderWing.enabled = false;
+
+        colliderCabeza = enemigoCabeza.GetComponent<BoxCollider>();
         
+
     }
     
     private void Update()
     {
         estarAlerta = Physics.CheckSphere(transform.position, rangoDeAlerta, capaDelJugador);
-        if (estarAlerta&!enemigoAtacando)
+        if (estarAlerta&!enemigoAtacando&!muriendo)
         {
             //transform.LookAt(jugador);
             Vector3 posJugador = new Vector3(jugador.position.x, transform.position.y, jugador.position.z);
@@ -47,13 +61,15 @@ public class Enemigo : MonoBehaviour
         }
 
         puedeAtacar = Physics.CheckSphere(transform.position, rangoDeAtaque, capaDelJugador);
-        if (puedeAtacar&!enemigoAtacando)
+        if (puedeAtacar&!enemigoAtacando&!muriendo)
         {
-            
             animator.SetTrigger("ataque");
             StartCoroutine(CrAtaque());
-            
         }
+        
+        print("Vida "+gameObject.name+": "+ Vida);
+        
+        
     }
 
     private void OnDrawGizmos()
@@ -82,4 +98,103 @@ public class Enemigo : MonoBehaviour
         
         enemigoAtacando = false;
     }
+
+    public IEnumerator CrMorir()
+    {
+        muriendo = true;
+        //float duracionMorir = animMorir.length;
+        yield return new WaitForSeconds(1f);
+        muriendo = false;
+        Destroy(gameObject);
+    }
+
+    public int Vida
+    {
+        get
+        {
+            return _vida;
+        }
+
+        set
+        {
+            if (value <= 0)
+            {
+                Morir();
+            }
+            else if (value >= vidaMax)
+            {
+                _vida = vidaMax;
+            }
+            else
+            {
+                if (value < _vida)
+                {
+                    //StartCoroutine(CrColorDano());
+                }
+
+                _vida = value;
+            }
+
+             
+
+        }
+    }
+
+    private void Morir()
+    {
+        animator.SetTrigger("morir");
+        StartCoroutine(CrMorir());
+        
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "DisparoFire":
+                print("recibi fuego");
+                MeLastimaron(5);
+                break;
+
+            case "DisparoAgua":
+                print("recibi agua");
+                MeLastimaron(0);
+                break;
+
+            case "DisparoTierra":
+                print("recibi tierra");
+                MeLastimaron(0);
+                break;
+        }
+    }
+
+    private void MeLastimaron(int dano)
+    {
+        Vida = Vida - dano;
+    }
+
+    public void OnHitBoxEnter(Transform other)
+    {
+        print("onhitboxenter");
+        print("onhitboxenter name "+other.name);
+        
+        switch (other.gameObject.tag)
+        {
+            case "DisparoFire":
+                print("recibi fuego");
+                MeLastimaron(5);
+                break;
+
+            case "DisparoAgua":
+                print("recibi agua");
+                MeLastimaron(0);
+                break;
+
+            case "DisparoTierra":
+                print("recibi tierra");
+                MeLastimaron(0);
+                break;
+        }
+    }
+    
 }

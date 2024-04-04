@@ -8,6 +8,9 @@ TagManager:
   - PickupFire
   - PickupTierra
   - PickupAgua
+  - DisparoFire
+  - DisparoTierra
+  - DisparoAgua
   layers:
   - Default
   - TransparentFX
