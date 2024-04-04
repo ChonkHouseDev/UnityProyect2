@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
          rb.drag = 0;
       }
       
-      print(Convert.ToString(Vida) );
+      //print(Convert.ToString(Vida) );
    }
 
    private void FixedUpdate()
@@ -285,6 +285,7 @@ public class PlayerMovement : MonoBehaviour
 
    private void DanoEnemigo()
    {
+      
       Vida = Vida - 5;
    }
 
@@ -308,6 +309,7 @@ public class PlayerMovement : MonoBehaviour
    {
       if (other.CompareTag("Enemigo"))
       {
+         print("Colisiono "+other.name);
          DanoEnemigo();
       }
 
