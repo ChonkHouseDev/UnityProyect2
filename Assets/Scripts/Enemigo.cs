@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class Enemigo : MonoBehaviour
@@ -19,17 +20,16 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private AnimationClip animMorir;
     private bool muriendo;
     [SerializeField] private Transform enemigoWing;
-    private BoxCollider colliderWing;
-    [SerializeField] private Transform enemigoCabeza;
-    private BoxCollider colliderCabeza;
-
-    [SerializeField] private Bullet disparo;
-    
+    private BoxCollider colliderWing; 
     [SerializeField] protected int vidaMax;
     private int _vida;
+    [SerializeField]private GameObject render;
+    private SkinnedMeshRenderer render2;
+    
+    
     private void Awake()
     {
-        disparo.Enemy = this;
+         
         Vida = vidaMax;
         ObtenerComponentes();
     }
@@ -44,9 +44,7 @@ public class Enemigo : MonoBehaviour
         colliderWing = enemigoWing.GetComponent<BoxCollider>();
         colliderWing.enabled = false;
 
-        colliderCabeza = enemigoCabeza.GetComponent<BoxCollider>();
-        
-
+        render2=render.GetComponent<SkinnedMeshRenderer>();
     }
     
     private void Update()
@@ -108,6 +106,13 @@ public class Enemigo : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public IEnumerator CrDano()
+    {
+        render2.material.color = Color.red;
+        yield return new WaitForSeconds(0.3f);
+        render2.material.color = Color.white;
+    }
+
     public int Vida
     {
         get
@@ -129,7 +134,7 @@ public class Enemigo : MonoBehaviour
             {
                 if (value < _vida)
                 {
-                    //StartCoroutine(CrColorDano());
+                    StartCoroutine(CrDano());
                 }
 
                 _vida = value;
@@ -144,7 +149,6 @@ public class Enemigo : MonoBehaviour
     {
         animator.SetTrigger("morir");
         StartCoroutine(CrMorir());
-        
     }
 
     public void OnTriggerEnter(Collider other)
@@ -167,34 +171,15 @@ public class Enemigo : MonoBehaviour
                 break;
         }
     }
-
-    private void MeLastimaron(int dano)
+    
+    public void MeLastimaron(int dano)
     {
         Vida = Vida - dano;
     }
 
-    public void OnHitBoxEnter(Transform other)
-    {
-        print("onhitboxenter");
-        print("onhitboxenter name "+other.name);
-        
-        switch (other.gameObject.tag)
-        {
-            case "DisparoFire":
-                print("recibi fuego");
-                MeLastimaron(5);
-                break;
-
-            case "DisparoAgua":
-                print("recibi agua");
-                MeLastimaron(0);
-                break;
-
-            case "DisparoTierra":
-                print("recibi tierra");
-                MeLastimaron(0);
-                break;
-        }
-    }
     
+    
+   
+
+
 }

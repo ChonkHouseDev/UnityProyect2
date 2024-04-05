@@ -1,15 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
      public float life = 3;
-     internal Enemigo Enemy;
-
- 
-
+      
+     
      private void Awake()
      {
           Destroy(gameObject,life);
@@ -18,14 +17,15 @@ public class Bullet : MonoBehaviour
      private void OnCollisionEnter(Collision collision)
      {
           //Destroy(collision.gameObject);
-          //print("el disparo colisiono con: "+collision.gameObject.name);
+          
           
      }
 
      private void OnTriggerEnter(Collider other)
      {
-          print("bala colisiono con: "+other.transform);
-          Enemy.OnHitBoxEnter(other.transform);
+          print("el disparo colisiono con: "+other.gameObject.name);
           Destroy(gameObject);
      }
+     
+      
 }
