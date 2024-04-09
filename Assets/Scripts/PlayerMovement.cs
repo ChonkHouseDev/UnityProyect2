@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class PlayerMovement : MonoBehaviour
 {
    [Header("Movement")] 
@@ -70,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
       air
    }
 
+   public PlayerCam playercam;
+   
    #region Items
    public int _cantidadFuego;
 
@@ -153,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
       CantidadFuego = 0;
       CantidadAgua = 0;
       CantidadTierra = 0;
+     
    }
 
    private void MyInput()
@@ -311,6 +315,7 @@ public class PlayerMovement : MonoBehaviour
       {
          print("Colisiono "+other.name);
          DanoEnemigo();
+         playercam.SetVignetteActive();
       }
 
       switch (other.tag)

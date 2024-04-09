@@ -14,7 +14,7 @@ public class TakeDamage : MonoBehaviour
     void Start()
     {
         volume = GetComponent<PostProcessVolume>();
-        volume.profile.TryGetSettings<Vignette>(out vignette);
+        volume.profile.TryGetSettings(out vignette);
 
         if (!vignette)
         {
@@ -31,12 +31,14 @@ public class TakeDamage : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+             
             StartCoroutine(TakeDamageEffect());
         }
     }
 
     public IEnumerator TakeDamageEffect()
     {
+         
         intensity = 0.4f;
         vignette.enabled.Override(true);
         vignette.intensity.Override(0.4f);
