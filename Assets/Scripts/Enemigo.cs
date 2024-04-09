@@ -12,6 +12,7 @@ public class Enemigo : MonoBehaviour
     public float rangoDeAtaque;
     private bool puedeAtacar;
     private bool enemigoAtacando;
+    private bool enemigoCaminando;
     public LayerMask capaDelJugador;
     public Transform jugador;
     public float velocidad;
@@ -50,22 +51,36 @@ public class Enemigo : MonoBehaviour
     private void Update()
     {
         estarAlerta = Physics.CheckSphere(transform.position, rangoDeAlerta, capaDelJugador);
+         
         if (estarAlerta&!enemigoAtacando&!muriendo)
         {
             //transform.LookAt(jugador);
             Vector3 posJugador = new Vector3(jugador.position.x, transform.position.y, jugador.position.z);
             transform.LookAt(posJugador);
             transform.position = Vector3.MoveTowards(transform.position, posJugador, velocidad * Time.deltaTime);
+             
         }
+        
 
         puedeAtacar = Physics.CheckSphere(transform.position, rangoDeAtaque, capaDelJugador);
         if (puedeAtacar&!enemigoAtacando&!muriendo)
         {
+             
             animator.SetTrigger("ataque");
             StartCoroutine(CrAtaque());
         }
         
-        print("Vida "+gameObject.name+": "+ Vida);
+        //print("Vida "+gameObject.name+": "+ Vida);
+
+        if (estarAlerta)
+        {
+            animator.SetBool("caminar",true);
+        }
+        else
+        {
+            animator.SetBool("caminar",false);
+        }
+        
         
         
     }
@@ -100,8 +115,8 @@ public class Enemigo : MonoBehaviour
     public IEnumerator CrMorir()
     {
         muriendo = true;
-        //float duracionMorir = animMorir.length;
-        yield return new WaitForSeconds(1f);
+        float duracionMorir = animMorir.length;
+        yield return new WaitForSeconds(duracionMorir);
         muriendo = false;
         Destroy(gameObject);
     }
