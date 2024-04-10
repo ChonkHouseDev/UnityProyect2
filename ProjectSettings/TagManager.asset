@@ -11,6 +11,8 @@ TagManager:
   - DisparoFire
   - DisparoTierra
   - DisparoAgua
+  - Recover
+  - FullRecover
   layers:
   - Default
   - TransparentFX

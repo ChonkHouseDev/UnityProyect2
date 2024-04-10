@@ -311,13 +311,6 @@ public class PlayerMovement : MonoBehaviour
 
    public void OnTriggerEnter(Collider other)
    {
-      if (other.CompareTag("Enemigo"))
-      {
-         print("Colisiono "+other.name);
-         DanoEnemigo();
-         playercam.SetVignetteActive();
-      }
-
       switch (other.tag)
       {
          case "PickupFire":
@@ -338,11 +331,27 @@ public class PlayerMovement : MonoBehaviour
             print("pickup tierra");
             break;
          
-            
+         case "Enemigo":
+            print("Colisiono "+other.name);
+            DanoEnemigo();
+            playercam.SetVignetteActive();
+            break;
+         
+         case "Recover":
+            Recover(10);
+            break;
+         
+         case "FullRecover":
+            Recover(1000);
+            break;
       }
-       
    }
 
+   private void Recover(int recuperar)
+   {
+      Vida += recuperar;
+   }
+   
    public int Vida
    {
       get
