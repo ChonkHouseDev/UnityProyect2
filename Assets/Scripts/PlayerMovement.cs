@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
    public KeyCode jumpKey = KeyCode.Space;
    public KeyCode sprintKey = KeyCode.LeftShift;
    public KeyCode crouchKey = KeyCode.LeftControl;
+   
 
    [Header("Ground Check")] 
    public float playerHeight;
@@ -184,6 +185,8 @@ public class PlayerMovement : MonoBehaviour
       {
          transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
       }
+      
+      
       
    }
 

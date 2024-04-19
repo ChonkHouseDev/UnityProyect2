@@ -303,6 +303,10 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 1204589624}
   bulletPrefab: {fileID: 7085285559630554661, guid: a333e5465b395ee4d88152d342f17b13, type: 3}
   bulletSpeed: 10
+  materiales:
+  - {fileID: 2100000, guid: eb9e6cd35ed02904db1b668b6a051513, type: 2}
+  - {fileID: 2100000, guid: 867c91ec83344a8479d785b50f77a696, type: 2}
+  - {fileID: 2100000, guid: f83572adf9ec4bb4fbc94991eb590321, type: 2}
 --- !u!1 &74631569
 GameObject:
   m_ObjectHideFlags: 0
