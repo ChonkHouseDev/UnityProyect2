@@ -27,5 +27,11 @@ public class Bullet : MonoBehaviour
           Destroy(gameObject);
      }
      
+     
+     
+     // public KeyCode weapon1 = KeyCode.Alpha1;
+     // public KeyCode weapon2 = KeyCode.Alpha2;
+     // public KeyCode weapon3 = KeyCode.Alpha3;
+     
       
 }
