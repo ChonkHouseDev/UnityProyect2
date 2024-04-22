@@ -624,6 +624,7 @@ Transform:
   - {fileID: 1836117569}
   - {fileID: 170540054}
   - {fileID: 74631570}
+  - {fileID: 995558833}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &215713940
@@ -4764,13 +4765,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995558832}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 114.5, y: 17, z: 92.75}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -32, y: 1.5, z: -31.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963194228}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 215713939}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &995558834
 MonoBehaviour:
@@ -9706,6 +9707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450651901978765}
+  - component: {fileID: 919132147630092856}
   m_Layer: 0
   m_Name: Manos_Idle
   m_TagString: Untagged
@@ -9713,6 +9715,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &919132147630092856
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147630092855}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d59a231ca7abc934bbd65829194ccfd1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &922692680322181055
 GameObject:
   m_ObjectHideFlags: 0
@@ -16081,7 +16104,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 705507995}
   - {fileID: 1828426963}
-  - {fileID: 995558833}
   - {fileID: 215713939}
   - {fileID: 181213362117265556}
   - {fileID: 1474281514}
