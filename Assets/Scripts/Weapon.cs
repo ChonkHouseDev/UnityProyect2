@@ -19,10 +19,14 @@ public class Weapon : MonoBehaviour
     [Header("Materiales")]
     [SerializeField] public Material[] materiales;
 
+    [SerializeField] private Transform personaje;
+    private Animator animator;
+
     private void Awake()
     {
         tagBullet = "DisparoFire";
         materialBullet = materiales[0];
+        animator = personaje.GetChild(1).GetComponent<Animator>();
     }
     
     private void Update()
@@ -38,6 +42,8 @@ public class Weapon : MonoBehaviour
             bullet.GetComponent<Renderer>().material = materialBullet;
             
             print("Bullet con tag: "+bullet.tag);
+            
+            animator.SetTrigger("ataque");
         }
 
         if (Input.GetKeyDown(weapon1))

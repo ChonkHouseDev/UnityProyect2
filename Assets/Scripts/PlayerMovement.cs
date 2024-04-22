@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
       crouching,
       air
    }
+   [SerializeField]private Transform personaje;
+   private Animator animator;
 
    public PlayerCam playercam;
    
@@ -132,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
       MyInput();
       SpeedControl();
       StateHandler();
+      Animaciones();
       
       //handle drag
       if (grounded)
@@ -153,6 +156,9 @@ public class PlayerMovement : MonoBehaviour
 
    private void Awake()
    {
+
+      animator = personaje.GetChild(1).GetComponent<Animator>();
+      
       Vida = vidaMax;
       CantidadFuego = 0;
       CantidadAgua = 0;
@@ -221,6 +227,26 @@ public class PlayerMovement : MonoBehaviour
       
    }
 
+   private void Animaciones()
+   {
+      switch (state)
+      {
+         case MovementState.sprinting:
+            animator.SetBool("run",true);
+            print("corriendo");
+            break;
+         
+         case MovementState.walking:
+            animator.SetBool("run",false);
+            print("caminando");
+            break;
+         
+         default:
+            //default   
+            break;
+      }
+   }
+
    private void MovePlayer()
    {
       //calculate movement direction
@@ -277,7 +303,7 @@ public class PlayerMovement : MonoBehaviour
    private void Jump()
    {
       exitingSlope = true;
-      
+      animator.SetTrigger("salto");
       // reset y velocity
       rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
       rb.AddForce(transform.up * jumpForce,ForceMode.Impulse);
