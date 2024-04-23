@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 
 
 public class PlayerMovement : MonoBehaviour
