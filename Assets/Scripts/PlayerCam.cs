@@ -65,6 +65,7 @@ public class PlayerCam : MonoBehaviour
     private IEnumerator CrVignetteActive()
     {
         intensity = 0.5f;
+        vignette.color.value = Color.red;
         vignette.active = true;
         vignette.intensity.Override(0.5f);
         
@@ -81,6 +82,39 @@ public class PlayerCam : MonoBehaviour
         vignette.active = false;
         yield break;
 
+    }
+
+    public void SetVignetteMuerte()
+    {
+        StartCoroutine(CrVignetteMuerte());
+    }
+
+    public void RSetVignette()
+    {
+        vignette.active = false;
+    }
+
+    private IEnumerator CrVignetteMuerte()
+    {
+        intensity = 0.5f;
+        vignette.color.value=Color.black;
+        vignette.active = true;
+        vignette.intensity.Override(0.5f);
+        
+        yield return new WaitForSeconds(0.4f);
+        while (intensity > 0)
+        {
+            intensity += 0.1f;
+            if (intensity >= 1)
+            {
+                intensity = 1;
+            }
+            vignette.intensity.Override(intensity);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        vignette.active = false;
+        yield break;
     }
     
     #endregion vignette

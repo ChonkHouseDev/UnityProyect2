@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditorInternal;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -75,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
    private Animator animator;
 
    public PlayerCam playercam;
+
+   [SerializeField]private Transform checkPoint;
    
    #region Items
    public int _cantidadFuego;
@@ -373,12 +376,32 @@ public class PlayerMovement : MonoBehaviour
          case "FullRecover":
             Recover(1000);
             break;
+         
+         case "FINAL":
+            GameManager.Win();
+            break;
       }
    }
 
    private void Recover(int recuperar)
    {
       Vida += recuperar;
+   }
+
+   public IEnumerator Morir()
+   {
+      enabled = false;
+      yield return new WaitForSeconds(3f);
+      //playercam.SetVignetteMuerte();
+      FinalizarMuerte();
+   }
+
+   private void FinalizarMuerte()
+   {
+      transform.position = checkPoint.position;
+      enabled = true;
+      Vida = vidaMax;
+      //playercam.RSetVignette();
    }
    
    public int Vida
@@ -392,7 +415,7 @@ public class PlayerMovement : MonoBehaviour
       {
          if (value <= 0)
          {
-            //Morir
+            StartCoroutine(Morir());
             return;
          }
          else if (value >= vidaMax)
