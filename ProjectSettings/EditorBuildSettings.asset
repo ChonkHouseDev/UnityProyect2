@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/MainMenu_falla.unity
     guid: 08faf0a2012d0ef4aabc2b41d5a43ac3
   - enabled: 1
     path: Assets/Scenes/Escenas/Creditos.unity
