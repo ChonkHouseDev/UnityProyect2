@@ -37,15 +37,26 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void JuegoEnPausa()
+    public static void JuegoEnPausa()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             EnPausa = !EnPausa;
-        }    
+        }
+
+        if (!EnPausa)
+        {
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        
     }
 
-    private static bool EnPausa
+    public static bool EnPausa
     {
         get => _enPausa;
 
@@ -55,6 +66,11 @@ public class GameManager : MonoBehaviour
             canvasPausa.enabled = value;
             Time.timeScale = value ? 0 : 1;
         }
+    }
+
+    public static void SalirJuegoEnd()
+    {
+        Application.Quit();
     }
     
     
